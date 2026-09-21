@@ -1,1 +1,1 @@
-   """Paquete blog: módulos del sistema de blog por consola."""
+"""Paquete blog: módulos del sistema de blog por consola."""
