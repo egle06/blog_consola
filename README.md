@@ -38,7 +38,7 @@ blog_consola/
 | Archivo | Responsabilidad |
 |---|---|
 | `main.py` | Archivo principal. Importa las piezas del paquete y coordina el flujo del menú. |
-| `blog/__init__.py` | Indica a Python que la carpeta `blog/` es un paquete. Está vacío. |
+| `blog/__init__.py` | Indica a Python que la carpeta `blog/` es un paquete. |
 | `blog/datos.py` | Datos base: `perfil_autor`, `estados_post`, `etiquetas_blog` y `posts`. |
 | `blog/menu.py` | Muestra el menú y captura la opción elegida (`mostrar_menu()`). |
 | `blog/operaciones.py` | Funciones del blog: `listar_posts()`, `buscar_por_titulo()` y `filtrar_por_tag()`. |
