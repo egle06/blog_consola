@@ -1,0 +1,96 @@
+[
+    {
+        "id": 1,
+        "titulo": "Introducción a Data Science",
+        "contenido": "Un primer vistazo a la ciencia de datos y sus aplicaciones prácticas.",
+        "autor": {
+            "nombre": "Egle Aldana Martinelli",
+            "bio": "Estudiante de Data Science y especialista en calidad.",
+            "especialidad": "Data Science y Python",
+            "redes_sociales": [
+                "@egle_data",
+                "@egle_python"
+            ]
+        },
+        "tags": [
+            "Data Science",
+            "Principiantes"
+        ],
+        "estado": "publicado"
+    },
+    {
+        "id": 2,
+        "titulo": "Gestión de Calidad en Procesos",
+        "contenido": "Métodos para implementar control y aseguramiento de calidad en la industria.",
+        "autor": {
+            "nombre": "Egle Aldana Martinelli",
+            "bio": "Estudiante de Data Science y especialista en calidad.",
+            "especialidad": "Data Science y Python",
+            "redes_sociales": [
+                "@egle_data",
+                "@egle_python"
+            ]
+        },
+        "tags": [
+            "Calidad",
+            "Mejora Continua"
+        ],
+        "estado": "borrador"
+    },
+    {
+        "id": 3,
+        "titulo": "Optimizando la Logística con Datos",
+        "contenido": "Cómo el análisis de datos transforma las cadenas de suministro modernas.",
+        "autor": {
+            "nombre": "Egle Aldana Martinelli",
+            "bio": "Estudiante de Data Science y especialista en calidad.",
+            "especialidad": "Data Science y Python",
+            "redes_sociales": [
+                "@egle_data",
+                "@egle_python"
+            ]
+        },
+        "tags": [
+            "Logística",
+            "Data Science"
+        ],
+        "estado": "archivado"
+    },
+    {
+        "id": 4,
+        "titulo": "",
+        "contenido": "",
+        "autor": {
+            "nombre": "Egle Aldana Martinelli",
+            "bio": "Estudiante de Data Science y especialista en calidad.",
+            "especialidad": "Data Science y Python",
+            "redes_sociales": [
+                "@egle_data",
+                "@egle_python"
+            ]
+        },
+        "tags": [
+            "Python"
+        ],
+        "estado": "en_revision"
+    },
+    {
+        "id": 5,
+        "titulo": "Mi post de prueba",
+        "contenido": "Texto de prueba",
+        "autor": {
+            "nombre": "Egle Aldana Martinelli",
+            "bio": "Estudiante de Data Science y especialista en calidad.",
+            "especialidad": "Data Science y Python",
+            "redes_sociales": [
+                "@egle_data",
+                "@egle_python"
+            ]
+        },
+        "tags": [
+            "Python",
+            "Pruebas"
+        ],
+        "estado": "publicado"
+    }
+]

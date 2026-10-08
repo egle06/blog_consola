@@ -1,76 +1,89 @@
 """
 main.py
 
-Archivo principal del sistema del blog. Solo coordina: importa las piezas
-del paquete blog y las conecta según la opción que elige el usuario.
+Archivo principal del sistema del blog. Solo coordina: carga los posts desde
+posts.json, crea la instancia de Blog y conecta las opciones del menú con
+los métodos de esa instancia.
 
 Ejecutar desde esta carpeta con: python main.py
 """
 
-from blog.datos import posts
-from blog.menu import mostrar_menu
-from blog.operaciones import listar_posts, buscar_por_titulo, filtrar_por_tag
+from blog.datos import cargar_posts, guardar_posts, perfil_autor, estados_post
+from blog.menu import mostrar_menu, pedir_datos_nuevo_post
+from blog.modelos import Blog, crear_autor_desde_dict
 from blog.validaciones import validar_post
 
 
-if __name__ == "__main__":
+def main():
+    blog = Blog(cargar_posts())
+    cambios_sin_guardar = False
 
     while True:
         opcion = mostrar_menu()
 
-        # Si mostrar_menu() retornó None, la entrada no era un número
-        if opcion is None:
-            continue
-
-        # Opción 1: Ver todos los posts
         if opcion == 1:
-            listar_posts(posts)
+            blog.listar_posts()
 
-        # Opción 2: Buscar por título
         elif opcion == 2:
-            termino = input("Buscar por título: ").strip()
-
-            if termino == "":
-                print("\nLa búsqueda no puede estar vacía.")
+            termino = input("Término a buscar en el título: ").strip()
+            if not termino:
+                print("\nDebés ingresar un término de búsqueda.")
             else:
-                resultados = buscar_por_titulo(posts, termino)
-                if not resultados:
-                    print("\nNo se encontraron posts que coincidan con la búsqueda.")
+                resultados = blog.buscar_por_titulo(termino)
+                if resultados:
+                    blog.listar_posts(resultados)
                 else:
-                    print("\nResultados de la búsqueda:")
-                    for post in resultados:
-                        print(f"- {post.get('titulo', '(sin título)')}")
+                    print(f'\nNo se encontraron posts con el título "{termino}".')
 
-        # Opción 3: Filtrar por tag
         elif opcion == 3:
-            tag = input("Ingresá la etiqueta a buscar: ").strip()
-
-            if tag == "":
-                print("\nEl tag no puede estar vacío.")
+            tag = input("Tag a filtrar: ").strip()
+            if not tag:
+                print("\nDebés ingresar un tag.")
             else:
-                resultados = filtrar_por_tag(posts, tag)
-                if not resultados:
-                    print("\nNo se encontraron posts con esa etiqueta.")
+                resultados = blog.filtrar_por_tag(tag)
+                if resultados:
+                    blog.listar_posts(resultados)
                 else:
-                    print(f"\nPosts con el tag '{tag}':")
-                    for post in resultados:
-                        print(f"- {post.get('titulo', '(sin título)')}")
+                    print(f'\nNo se encontraron posts con el tag "{tag}".')
 
-        # Opción 4: Validar posts
         elif opcion == 4:
+            titulo, contenido, tags, estado = pedir_datos_nuevo_post()
+            try:
+                if estado.strip() not in estados_post:
+                    raise ValueError(f'el estado "{estado.strip()}" no es válido')
+                autor = crear_autor_desde_dict(perfil_autor)
+                nuevo = blog.crear_post(titulo, contenido, autor, tags, estado)
+                cambios_sin_guardar = True
+                print(f'\nPost creado: "{nuevo.titulo}" (id {nuevo.id}). '
+                      f'Recordá guardarlo con la opción 6.')
+            except ValueError as error:
+                print(f"\nNo se pudo crear el post: {error}.")
+
+        elif opcion == 5:
             print("\nValidando posts...\n")
-            for i, post in enumerate(posts, start=1):
+            for post in blog.obtener_posts():
                 es_valido, mensaje = validar_post(post)
                 if es_valido:
-                    print(f"Post {i}: válido")
+                    print(f"Post {post.id}: válido")
                 else:
-                    print(f"Post {i}: error - {mensaje}")
+                    print(f"Post {post.id}: error - {mensaje}")
 
-        # Opción 5: Salir
-        elif opcion == 5:
-            print("\nGracias por usar el sistema del blog. ¡Hasta luego!")
+        elif opcion == 6:
+            if guardar_posts(blog.to_list()):
+                cambios_sin_guardar = False
+                print("\nPosts guardados en posts.json.")
+
+        elif opcion == 7:
+            if cambios_sin_guardar:
+                respuesta = input("Hay cambios sin guardar. ¿Guardar antes de salir? (s/n): ")
+                if respuesta.strip().lower() == "s" and guardar_posts(blog.to_list()):
+                    print("Posts guardados en posts.json.")
+            print("\n¡Hasta luego!")
             break
 
-        # Cualquier otro número no contemplado
-        else:
-            print("\nOpción inválida, elegí un número entre 1 y 5.")
+        elif opcion is not None:
+            print("\nOpción inválida: elegí un número del 1 al 7.")
+
+
+if __name__ == "__main__":
+    main()
